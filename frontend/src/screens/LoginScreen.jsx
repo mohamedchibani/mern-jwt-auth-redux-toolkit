@@ -32,15 +32,17 @@ const LoginScreen = () => {
       dispatch(setCredentials({ ...res }));
       navigate("/");
     } catch (err) {
-      toast.error(err?.data?.message || err.Error);
+      toast.error(err?.data?.message || err.error);
     }
   };
+
   return (
     <FormContainer>
       <h1>Sign In</h1>
+
       <Form onSubmit={submitHandler}>
         <Form.Group className='my-2' controlId='email'>
-          <Form.Label>Email Adress</Form.Label>
+          <Form.Label>Email Address</Form.Label>
           <Form.Control
             type='email'
             placeholder='Enter email'
@@ -53,24 +55,29 @@ const LoginScreen = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type='password'
-            placeholder='Enter Password'
+            placeholder='Enter password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        {isLoading && <Loader />}
-
-        <Button type='submit' variant='primary' className='mt-3'>
+        <Button
+          disabled={isLoading}
+          type='submit'
+          variant='primary'
+          className='mt-3'
+        >
           Sign In
         </Button>
-
-        <Row className='py-3'>
-          <Col>
-            New Customer? <Link to='/register'>Register</Link>
-          </Col>
-        </Row>
       </Form>
+
+      {isLoading && <Loader />}
+
+      <Row className='py-3'>
+        <Col>
+          New Customer? <Link to='/register'>Register</Link>
+        </Col>
+      </Row>
     </FormContainer>
   );
 };
